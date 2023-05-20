@@ -387,7 +387,7 @@ public class GriffRendor : Form
                 FileName = ffprobe_path,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
-                CreateNoWindow = false
+                CreateNoWindow = true
             }
         };
 
@@ -423,11 +423,17 @@ public class GriffRendor : Form
         }
         else{
             //Read video information to get duration if no specific cut is specified.
-            proc_ffprobe.StartInfo.Arguments = "-v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 \"" + txtInput.Text + "\"";
-            proc_ffprobe.Start();
-            while (!proc_ffprobe.StandardOutput.EndOfStream) {
-                string line = proc_ffprobe.StandardOutput.ReadLine();
-                duration = (int)Math.Ceiling(double.Parse(line, new CultureInfo("en-US")));
+            try {
+                proc_ffprobe.StartInfo.Arguments = "-v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 \"" + txtInput.Text + "\"";
+                proc_ffprobe.Start();
+                while (!proc_ffprobe.StandardOutput.EndOfStream)
+                {
+                    string line = proc_ffprobe.StandardOutput.ReadLine();
+                    duration = (int)Math.Ceiling(double.Parse(line, new CultureInfo("en-US")));
+                }
+            } catch (Exception) {
+                MessageBox.Show("Failed to get video duration, are you sure it's a video file?", "Failed to get video duration");
+                return;
             }
         }
 
@@ -451,20 +457,24 @@ public class GriffRendor : Form
         if (chkResolution.Checked) {
             ffmpeg_resolution = "-vf scale=" + txtResolutionWidth.Text + ":" + txtResolutionHeigth.Text;
         }
-        
-        //Perform analysis pass using ffmpeg
-        proc_ffmpeg.StartInfo.Arguments = "-y " + ffmpeg_starttime + " " + ffmpeg_duration + " -i \"" + txtInput.Text + "\" " + ffmpeg_resolution + " -c:v libx264 -b:v " + Convert.ToString(video_bitrate) + "k -pass 1 -vsync cfr " + ffmpeg_framerate + " " + ffmpeg_preset + " -f null nul";
-        proc_ffmpeg.Start();
-        proc_ffmpeg.WaitForExit();
 
-        //Perform encoding pass using ffmpeg
-        proc_ffmpeg.StartInfo.Arguments = "-y " + ffmpeg_starttime + " " + ffmpeg_duration + " -i \"" + txtInput.Text + "\" " + ffmpeg_resolution + " -c:v libx264 -b:v " + Convert.ToString(video_bitrate) + "k -pass 2 " + ffmpeg_audio + " " + ffmpeg_framerate + " " + ffmpeg_preset + " \"" + txtOutput.Text + "\"";
-        proc_ffmpeg.Start();
-        proc_ffmpeg.WaitForExit();
+        try {
+            //Perform analysis pass using ffmpeg
+            proc_ffmpeg.StartInfo.Arguments = "-y " + ffmpeg_starttime + " " + ffmpeg_duration + " -i \"" + txtInput.Text + "\" " + ffmpeg_resolution + " -c:v libx264 -b:v " + Convert.ToString(video_bitrate) + "k -pass 1 -vsync cfr " + ffmpeg_framerate + " " + ffmpeg_preset + " -f null nul";
+            proc_ffmpeg.Start();
+            proc_ffmpeg.WaitForExit();
+            if (proc_ffmpeg.ExitCode != 0) { MessageBox.Show("ffmpeg pass 1 failed with exit code " + proc_ffmpeg.ExitCode); return; }
 
-        //Clean up FFMPEG files
-        File.Delete(ffmpeg_logfile);
-        File.Delete(ffmpeg_mbtreefile);
+            //Perform encoding pass using ffmpeg
+            proc_ffmpeg.StartInfo.Arguments = "-y " + ffmpeg_starttime + " " + ffmpeg_duration + " -i \"" + txtInput.Text + "\" " + ffmpeg_resolution + " -c:v libx264 -b:v " + Convert.ToString(video_bitrate) + "k -pass 2 " + ffmpeg_audio + " " + ffmpeg_framerate + " " + ffmpeg_preset + " \"" + txtOutput.Text + "\"";
+            proc_ffmpeg.Start();
+            proc_ffmpeg.WaitForExit();
+            if (proc_ffmpeg.ExitCode != 0) { MessageBox.Show("ffmpeg pass 2 failed with exit code " + proc_ffmpeg.ExitCode); return; }
+        } finally {
+            //Clean up FFMPEG files
+            File.Delete(ffmpeg_logfile);
+            File.Delete(ffmpeg_mbtreefile);
+        }
 
         MessageBox.Show("Done!");
     }
