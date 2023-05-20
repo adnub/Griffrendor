@@ -57,11 +57,13 @@ public class GriffRendor : Form
         }
 
         //Define and build form and controls
-        Size = new Size(800,300);
+        AutoSizeMode = AutoSizeMode.GrowOnly;
+        AutoSize = true;
         Text = "GriffRendor";
-        FormBorderStyle = FormBorderStyle.FixedDialog;
+        FormBorderStyle = FormBorderStyle.Sizable;
+        SizeGripStyle = SizeGripStyle.Show;
         MaximizeBox = false;
-        CenterToScreen();
+        SuspendLayout();
         this.Load += new EventHandler(GriffRendor_Load);
 
         lblInput = new Label();
@@ -246,6 +248,9 @@ public class GriffRendor : Form
         chkSlowEncode.Size = new Size(500, chkResolution.Size.Height);
         chkSlowEncode.Font = font;
         Controls.Add(chkSlowEncode);
+
+        ResumeLayout(true);
+        CenterToScreen();
     }
     
     private void GriffRendor_Load (object sender, EventArgs e) {
