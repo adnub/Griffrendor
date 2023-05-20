@@ -460,13 +460,14 @@ public class GriffRendor : Form
 
         try {
             //Perform analysis pass using ffmpeg
-            proc_ffmpeg.StartInfo.Arguments = "-y " + ffmpeg_starttime + " " + ffmpeg_duration + " -i \"" + txtInput.Text + "\" " + ffmpeg_resolution + " -c:v libx264 -b:v " + Convert.ToString(video_bitrate) + "k -pass 1 -vsync cfr " + ffmpeg_framerate + " " + ffmpeg_preset + " -f null nul";
+            string ffmpegBaseArgs = "-y " + ffmpeg_starttime + " " + ffmpeg_duration + " -i \"" + txtInput.Text + "\" " + ffmpeg_resolution + " -c:v libx264 -b:v " + Convert.ToString(video_bitrate) + "k " + ffmpeg_framerate + " " + ffmpeg_preset;
+            proc_ffmpeg.StartInfo.Arguments = ffmpegBaseArgs + "-pass 1 -vsync cfr -f null nul";
             proc_ffmpeg.Start();
             proc_ffmpeg.WaitForExit();
             if (proc_ffmpeg.ExitCode != 0) { MessageBox.Show("ffmpeg pass 1 failed with exit code " + proc_ffmpeg.ExitCode); return; }
 
             //Perform encoding pass using ffmpeg
-            proc_ffmpeg.StartInfo.Arguments = "-y " + ffmpeg_starttime + " " + ffmpeg_duration + " -i \"" + txtInput.Text + "\" " + ffmpeg_resolution + " -c:v libx264 -b:v " + Convert.ToString(video_bitrate) + "k -pass 2 " + ffmpeg_audio + " " + ffmpeg_framerate + " " + ffmpeg_preset + " \"" + txtOutput.Text + "\"";
+            proc_ffmpeg.StartInfo.Arguments = "-pass 2 " + ffmpeg_audio + " \"" + txtOutput.Text + "\"";
             proc_ffmpeg.Start();
             proc_ffmpeg.WaitForExit();
             if (proc_ffmpeg.ExitCode != 0) { MessageBox.Show("ffmpeg pass 2 failed with exit code " + proc_ffmpeg.ExitCode); return; }
