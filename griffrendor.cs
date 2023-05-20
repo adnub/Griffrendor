@@ -5,7 +5,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Globalization;
- 
+
 public class GriffRendor : Form
 {
     private Label lblInput;
@@ -41,8 +41,7 @@ public class GriffRendor : Form
 
     private string[] args;
 
-    public GriffRendor (string[] args)
-    {
+    public GriffRendor (string[] args) {
         this.args = args;
         Font font = new Font("Liberation Sans", 12);
 
@@ -50,8 +49,7 @@ public class GriffRendor : Form
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
             font = new Font("Arial", 12);
             strDirSeperator = "\\";
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+        } else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
             font = new Font("Liberation Sans", 12);
             strDirSeperator = "/";
         }
@@ -68,8 +66,8 @@ public class GriffRendor : Form
 
         lblInput = new Label();
         lblInput.Text = "Input Video:";
-        lblInput.Location = new Point(10,10);
-        lblInput.Size = new Size(120,20);
+        lblInput.Location = new Point(10, 10);
+        lblInput.Size = new Size(120, 20);
         lblInput.Font = font;
         Controls.Add(lblInput);
 
@@ -78,11 +76,11 @@ public class GriffRendor : Form
         txtInput.Size = new Size(600, lblInput.Size.Height);
         Controls.Add(txtInput);
 
-        btnBrowseInput = new Button ();
+        btnBrowseInput = new Button();
         btnBrowseInput.Text = "...";
-        btnBrowseInput.Location = new Point(750,lblInput.Location.Y);
-        btnBrowseInput.Size = new Size(30,20);
-        btnBrowseInput.Click += new EventHandler (btnBrowseInput_Click);
+        btnBrowseInput.Location = new Point(750, lblInput.Location.Y);
+        btnBrowseInput.Size = new Size(30, 20);
+        btnBrowseInput.Click += new EventHandler(btnBrowseInput_Click);
         Controls.Add(btnBrowseInput);
 
         lblOutput = new Label();
@@ -97,11 +95,11 @@ public class GriffRendor : Form
         txtOutput.Size = new Size(txtInput.Size.Width, lblOutput.Size.Height);
         Controls.Add(txtOutput);
 
-        btnBrowseOutput = new Button ();
+        btnBrowseOutput = new Button();
         btnBrowseOutput.Text = "...";
-        btnBrowseOutput.Location = new Point(750,lblOutput.Location.Y);
-        btnBrowseOutput.Size = new Size(30,20);
-        btnBrowseOutput.Click += new EventHandler (btnBrowseOutput_Click);
+        btnBrowseOutput.Location = new Point(750, lblOutput.Location.Y);
+        btnBrowseOutput.Size = new Size(30, 20);
+        btnBrowseOutput.Click += new EventHandler(btnBrowseOutput_Click);
         Controls.Add(btnBrowseOutput);
 
         lblFilesize = new Label();
@@ -124,12 +122,12 @@ public class GriffRendor : Form
         chkAudio.Font = font;
         Controls.Add(chkAudio);
 
-        btnStart = new Button ();
+        btnStart = new Button();
         btnStart.Text = "START!";
-        btnStart.Location = new Point(660,lblFilesize.Location.Y);
-        btnStart.Size = new Size(120,40);
+        btnStart.Location = new Point(660, lblFilesize.Location.Y);
+        btnStart.Size = new Size(120, 40);
         btnStart.Font = font;
-        btnStart.Click += new EventHandler (btnStart_Click);
+        btnStart.Click += new EventHandler(btnStart_Click);
         Controls.Add(btnStart);
 
         lblOptionalSettings = new Label();
@@ -312,8 +310,7 @@ public class GriffRendor : Form
             txtCutEndHours.Enabled = true;
             txtCutEndMinutes.Enabled = true;
             txtCutEndSeconds.Enabled = true;
-        }
-        else {
+        } else {
             lblCutStart.Enabled = false;
             lblCutEnd.Enabled = false;
             txtCutStartHours.Enabled = false;
@@ -328,8 +325,7 @@ public class GriffRendor : Form
     private void chkFramerate_CheckedChanged (object sender, EventArgs e) {
         if (chkFramerate.Checked) {
             txtFramerate.Enabled = true;
-        }
-        else {
+        } else {
             txtFramerate.Enabled = false;
         }
     }
@@ -338,8 +334,7 @@ public class GriffRendor : Form
         if (chkResolution.Checked) {
             txtResolutionHeigth.Enabled = true;
             txtResolutionWidth.Enabled = true;
-        }
-        else {
+        } else {
             txtResolutionHeigth.Enabled = false;
             txtResolutionWidth.Enabled = false;
         }
@@ -381,7 +376,8 @@ public class GriffRendor : Form
         }
 
         //Define ffprobe process to determine video duration
-        var proc_ffprobe = new Process {
+        var proc_ffprobe = new Process
+        {
             StartInfo = new ProcessStartInfo
             {
                 FileName = ffprobe_path,
@@ -392,7 +388,8 @@ public class GriffRendor : Form
         };
 
         //Define ffmpeg process to do the heavy lifiting
-        var proc_ffmpeg = new Process {
+        var proc_ffmpeg = new Process
+        {
             StartInfo = new ProcessStartInfo
             {
                 FileName = ffmpeg_path,
@@ -415,19 +412,17 @@ public class GriffRendor : Form
         }
 
         if (chkCutVideo.Checked) {
-            int startSeconds = int.Parse(txtCutStartHours.Text)*3600 + int.Parse(txtCutStartMinutes.Text)*60 + int.Parse(txtCutStartSeconds.Text);
-            int endSeconds = int.Parse(txtCutEndHours.Text)*3600 + int.Parse(txtCutEndMinutes.Text)*60 + int.Parse(txtCutEndSeconds.Text);
+            int startSeconds = int.Parse(txtCutStartHours.Text) * 3600 + int.Parse(txtCutStartMinutes.Text) * 60 + int.Parse(txtCutStartSeconds.Text);
+            int endSeconds = int.Parse(txtCutEndHours.Text) * 3600 + int.Parse(txtCutEndMinutes.Text) * 60 + int.Parse(txtCutEndSeconds.Text);
             duration = endSeconds - startSeconds;
             ffmpeg_starttime = "-ss " + txtCutStartHours.Text + ":" + txtCutStartMinutes.Text + ":" + txtCutStartSeconds.Text;
             ffmpeg_duration = "-t " + duration;
-        }
-        else{
+        } else {
             //Read video information to get duration if no specific cut is specified.
             try {
                 proc_ffprobe.StartInfo.Arguments = "-v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 \"" + txtInput.Text + "\"";
                 proc_ffprobe.Start();
-                while (!proc_ffprobe.StandardOutput.EndOfStream)
-                {
+                while (!proc_ffprobe.StandardOutput.EndOfStream) {
                     string line = proc_ffprobe.StandardOutput.ReadLine();
                     duration = (int)Math.Ceiling(double.Parse(line, new CultureInfo("en-US")));
                 }
@@ -481,8 +476,7 @@ public class GriffRendor : Form
     }
 
     [STAThread]
-    static public void Main (string[] args)
-    {
-        Application.Run (new GriffRendor(args));
+    static public void Main (string[] args) {
+        Application.Run(new GriffRendor(args));
     }
 }
