@@ -346,23 +346,28 @@ public class GriffRendor : Form
     }
 
     private void btnStart_Click (object sender, EventArgs e) {
-        String ffmpeg_path = "";
-        String ffprobe_path = "";
+        string exeDir = Path.GetDirectoryName(Application.ExecutablePath);
+        string platformDirName = null;
+        string platformExeSuffix = null;
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+            platformDirName = "Windows";
+            platformExeSuffix = ".exe";
+        } else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+            platformDirName = "Linux";
+            platformExeSuffix = "";
+        } else {
+            MessageBox.Show("Error: Unknown OS, not sure which ffmpeg to use");
+            return;
+        }
+
+        String ffmpeg_path = Path.Combine(exeDir, platformDirName, "ffmpeg" + platformExeSuffix);
+        String ffprobe_path = Path.Combine(exeDir, platformDirName, "ffprobe" + platformExeSuffix);
         int duration = 0;
         int video_bitrate = 0;
 
         if (!File.Exists(txtInput.Text)) {
             MessageBox.Show("Error: Unable to find video file. Make sure the path you selected exists.");
             return;
-        }
-
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
-            ffmpeg_path = "Windows\\ffmpeg.exe";
-            ffprobe_path = "Windows\\ffprobe.exe";
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
-            ffmpeg_path = "Linux/ffmpeg";
-            ffprobe_path = "Linux/ffprobe";
         }
 
         if (!File.Exists(ffprobe_path)) {
