@@ -39,8 +39,11 @@ public class GriffRendor : Form
     private String ffmpeg_logfile = "ffmpeg2pass-0.log";
     private String ffmpeg_mbtreefile = "ffmpeg2pass-0.log.mbtree";
 
-    public GriffRendor ()
+    private string[] args;
+
+    public GriffRendor (string[] args)
     {
+        this.args = args;
         Font font = new Font("Liberation Sans", 12);
 
         //Set OS specific settings
@@ -246,14 +249,23 @@ public class GriffRendor : Form
     }
     
     private void GriffRendor_Load (object sender, EventArgs e) {
-        OpenFileDialog openFileDialog = new OpenFileDialog();
-        openFileDialog.Title = "Select Video File To Convert";
-        openFileDialog.InitialDirectory = ".";
-        openFileDialog.RestoreDirectory = true;
-        if (openFileDialog.ShowDialog() == DialogResult.OK) {
-            txtInput.Text = openFileDialog.FileName;
-            txtOutput.Text = Path.GetDirectoryName(openFileDialog.FileName) + strDirSeperator + Path.GetFileNameWithoutExtension(openFileDialog.FileName) + "_rendered.mp4";
+        string fileName = null;
+        if (args.Length > 0 &&
+            File.Exists(args[0])) {
+            fileName = args[0];
+        } else {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Select Video File To Convert";
+            openFileDialog.InitialDirectory = ".";
+            openFileDialog.RestoreDirectory = true;
+            if (openFileDialog.ShowDialog() == DialogResult.OK) {
+                fileName = openFileDialog.FileName;
+            } else {
+                return;
+            }
         }
+        txtInput.Text = fileName;
+        txtOutput.Text = Path.GetDirectoryName(fileName) + strDirSeperator + Path.GetFileNameWithoutExtension(fileName) + "_rendered.mp4";
     }
 
     private void btnBrowseInput_Click (object sender, EventArgs e) {
@@ -439,8 +451,8 @@ public class GriffRendor : Form
     }
 
     [STAThread]
-    static public void Main ()
+    static public void Main (string[] args)
     {
-        Application.Run (new GriffRendor ());
+        Application.Run (new GriffRendor(args));
     }
 }
