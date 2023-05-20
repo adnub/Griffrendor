@@ -252,7 +252,16 @@ public class GriffRendor : Form
         ResumeLayout(true);
         CenterToScreen();
     }
-    
+
+    private void autoPickOutput () {
+        int suffixNum = 1;
+        string suffix = "";
+        do {
+            txtOutput.Text = Path.GetDirectoryName(txtInput.Text) + strDirSeperator + Path.GetFileNameWithoutExtension(txtInput.Text) + "_rendered" + suffix + ".mp4";
+            suffix = "_" + (suffixNum++).ToString();
+        } while (File.Exists(txtOutput.Text));
+    }
+
     private void GriffRendor_Load (object sender, EventArgs e) {
         string fileName = null;
         if (args.Length > 0 &&
@@ -270,7 +279,7 @@ public class GriffRendor : Form
             }
         }
         txtInput.Text = fileName;
-        txtOutput.Text = Path.GetDirectoryName(fileName) + strDirSeperator + Path.GetFileNameWithoutExtension(fileName) + "_rendered.mp4";
+        autoPickOutput();
     }
 
     private void btnBrowseInput_Click (object sender, EventArgs e) {
@@ -279,7 +288,7 @@ public class GriffRendor : Form
         openFileDialog.RestoreDirectory = true;
         if (openFileDialog.ShowDialog() == DialogResult.OK) {
             txtInput.Text = openFileDialog.FileName;
-            txtOutput.Text = Path.GetDirectoryName(openFileDialog.FileName) + strDirSeperator + Path.GetFileNameWithoutExtension(openFileDialog.FileName) + "_rendered.mp4";
+            autoPickOutput();
         }
     }
 
