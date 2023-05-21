@@ -440,6 +440,7 @@ public class GriffRendor : Form
         //Calculate bitrate in kbit/s
         int int_filesize = int.Parse(txtFilesize.Text);
         video_bitrate = int_filesize * 8000 / duration;
+        
         if (chkAudio.Checked) {
             ffmpeg_audio = "-c:a aac -b:a 128k";
             video_bitrate -= 128;
@@ -456,13 +457,13 @@ public class GriffRendor : Form
         try {
             //Perform analysis pass using ffmpeg
             string ffmpegBaseArgs = "-y " + ffmpeg_starttime + " " + ffmpeg_duration + " -i \"" + txtInput.Text + "\" " + ffmpeg_resolution + " -c:v libx264 -b:v " + Convert.ToString(video_bitrate) + "k " + ffmpeg_framerate + " " + ffmpeg_preset;
-            proc_ffmpeg.StartInfo.Arguments = ffmpegBaseArgs + "-pass 1 -vsync cfr -f null nul";
+            proc_ffmpeg.StartInfo.Arguments = ffmpegBaseArgs + " -pass 1 -vsync cfr -f null nul";
             proc_ffmpeg.Start();
             proc_ffmpeg.WaitForExit();
             if (proc_ffmpeg.ExitCode != 0) { MessageBox.Show("ffmpeg pass 1 failed with exit code " + proc_ffmpeg.ExitCode); return; }
 
             //Perform encoding pass using ffmpeg
-            proc_ffmpeg.StartInfo.Arguments = "-pass 2 " + ffmpeg_audio + " \"" + txtOutput.Text + "\"";
+            proc_ffmpeg.StartInfo.Arguments = ffmpegBaseArgs + " -pass 2 " + ffmpeg_audio + " \"" + txtOutput.Text + "\"";
             proc_ffmpeg.Start();
             proc_ffmpeg.WaitForExit();
             if (proc_ffmpeg.ExitCode != 0) { MessageBox.Show("ffmpeg pass 2 failed with exit code " + proc_ffmpeg.ExitCode); return; }
