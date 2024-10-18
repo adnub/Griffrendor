@@ -34,6 +34,7 @@ public class GriffRendor : Form
     private TextBox txtResolutionWidth;
     private TextBox txtResolutionHeigth;
     private CheckBox chkSlowEncode;
+    private CheckBox chkUncapBitrate;
 
     private String strDirSeperator;
     private String ffmpeg_logfile = "ffmpeg2pass-0.log";
@@ -103,9 +104,9 @@ public class GriffRendor : Form
         Controls.Add(btnBrowseOutput);
 
         lblFilesize = new Label();
-        lblFilesize.Text = "Filesize (in MB):";
+        lblFilesize.Text = "Maximum filesize (in MB):";
         lblFilesize.Location = new Point(lblOutput.Location.X, lblOutput.Location.Y + lblOutput.Size.Height + 5);
-        lblFilesize.Size = new Size(lblOutput.Size.Width, lblOutput.Size.Height);
+        lblFilesize.Size = new Size(190, lblOutput.Size.Height);
         lblFilesize.Font = font;
         Controls.Add(lblFilesize);
 
@@ -246,6 +247,13 @@ public class GriffRendor : Form
         chkSlowEncode.Size = new Size(500, chkResolution.Size.Height);
         chkSlowEncode.Font = font;
         Controls.Add(chkSlowEncode);
+        
+        chkUncapBitrate = new CheckBox();
+        chkUncapBitrate.Text = "Uncap bitrate (Always generates a max file size video. But might break previews in Discord.)";
+        chkUncapBitrate.Location = new Point(chkSlowEncode.Location.X, chkSlowEncode.Location.Y + chkSlowEncode.Size.Height + 15);
+        chkUncapBitrate.Size = new Size(800, chkSlowEncode.Size.Height);
+        chkUncapBitrate.Font = font;
+        Controls.Add(chkUncapBitrate);
 
         ResumeLayout(true);
         CenterToScreen();
@@ -440,6 +448,10 @@ public class GriffRendor : Form
         //Calculate bitrate in kbit/s
         int int_filesize = int.Parse(txtFilesize.Text);
         video_bitrate = int_filesize * 8000 / duration;
+        
+        if (!chkUncapBitrate.Checked) {
+            if (video_bitrate > 15000) video_bitrate = 15000;
+        }
         
         if (chkAudio.Checked) {
             ffmpeg_audio = "-c:a aac -b:a 128k";
