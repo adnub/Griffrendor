@@ -112,7 +112,7 @@ public class GriffRendor : Form
         txtFilesize = new TextBox();
         txtFilesize.Location = new Point(lblFilesize.Location.X + lblFilesize.Size.Width + 10, lblFilesize.Location.Y);
         txtFilesize.Size = new Size(100, lblFilesize.Size.Height);
-        txtFilesize.Text = Convert.ToString(100);
+        txtFilesize.Text = Convert.ToString(50);
         Controls.Add(txtFilesize);
 
         chkAudio = new CheckBox();
