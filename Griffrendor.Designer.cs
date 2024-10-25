@@ -48,8 +48,8 @@
             this.txtCutEndSeconds = new System.Windows.Forms.TextBox();
             this.txtCutEndMinutes = new System.Windows.Forms.TextBox();
             this.txtCutEndHours = new System.Windows.Forms.TextBox();
-            this.chkFrameRate = new System.Windows.Forms.CheckBox();
-            this.txtFrameRate = new System.Windows.Forms.TextBox();
+            this.chkFramerate = new System.Windows.Forms.CheckBox();
+            this.txtFramerate = new System.Windows.Forms.TextBox();
             this.chkResolution = new System.Windows.Forms.CheckBox();
             this.txtResolutionWidth = new System.Windows.Forms.TextBox();
             this.txtResolutionHeight = new System.Windows.Forms.TextBox();
@@ -103,6 +103,7 @@
             this.btnBrowseInput.TabIndex = 4;
             this.btnBrowseInput.Text = "...";
             this.btnBrowseInput.UseVisualStyleBackColor = true;
+            this.btnBrowseInput.Click += new System.EventHandler(this.btnBrowseInput_Click);
             // 
             // btnBrowseOutput
             // 
@@ -113,6 +114,7 @@
             this.btnBrowseOutput.TabIndex = 5;
             this.btnBrowseOutput.Text = "...";
             this.btnBrowseOutput.UseVisualStyleBackColor = true;
+            this.btnBrowseOutput.Click += new System.EventHandler(this.btnBrowseOutput_Click);
             // 
             // lblFileSize
             // 
@@ -150,6 +152,7 @@
             this.btnStart.TabIndex = 9;
             this.btnStart.Text = "START!";
             this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // grpOptionalSettings
             // 
@@ -160,8 +163,8 @@
             this.grpOptionalSettings.Controls.Add(this.txtResolutionHeight);
             this.grpOptionalSettings.Controls.Add(this.txtResolutionWidth);
             this.grpOptionalSettings.Controls.Add(this.chkResolution);
-            this.grpOptionalSettings.Controls.Add(this.txtFrameRate);
-            this.grpOptionalSettings.Controls.Add(this.chkFrameRate);
+            this.grpOptionalSettings.Controls.Add(this.txtFramerate);
+            this.grpOptionalSettings.Controls.Add(this.chkFramerate);
             this.grpOptionalSettings.Controls.Add(this.txtCutEndSeconds);
             this.grpOptionalSettings.Controls.Add(this.txtCutEndMinutes);
             this.grpOptionalSettings.Controls.Add(this.txtCutEndHours);
@@ -187,6 +190,7 @@
             this.chkCutVideo.TabIndex = 0;
             this.chkCutVideo.Text = "Cut Video";
             this.chkCutVideo.UseVisualStyleBackColor = true;
+            this.chkCutVideo.CheckedChanged += new System.EventHandler(this.chkCutVideo_CheckedChanged);
             // 
             // lblCutStart
             // 
@@ -262,24 +266,25 @@
             this.txtCutEndHours.TabIndex = 6;
             this.txtCutEndHours.Text = "0";
             // 
-            // chkFrameRate
+            // chkFramerate
             // 
-            this.chkFrameRate.AutoSize = true;
-            this.chkFrameRate.Location = new System.Drawing.Point(11, 84);
-            this.chkFrameRate.Name = "chkFrameRate";
-            this.chkFrameRate.Size = new System.Drawing.Size(389, 24);
-            this.chkFrameRate.TabIndex = 9;
-            this.chkFrameRate.Text = "Change Framerate (Unchecked = Same as source)";
-            this.chkFrameRate.UseVisualStyleBackColor = true;
+            this.chkFramerate.AutoSize = true;
+            this.chkFramerate.Location = new System.Drawing.Point(11, 84);
+            this.chkFramerate.Name = "chkFramerate";
+            this.chkFramerate.Size = new System.Drawing.Size(389, 24);
+            this.chkFramerate.TabIndex = 9;
+            this.chkFramerate.Text = "Change Framerate (Unchecked = Same as source)";
+            this.chkFramerate.UseVisualStyleBackColor = true;
+            this.chkFramerate.CheckedChanged += new System.EventHandler(this.chkFrameRate_CheckedChanged);
             // 
-            // txtFrameRate
+            // txtFramerate
             // 
-            this.txtFrameRate.Enabled = false;
-            this.txtFrameRate.Location = new System.Drawing.Point(406, 82);
-            this.txtFrameRate.Name = "txtFrameRate";
-            this.txtFrameRate.Size = new System.Drawing.Size(46, 26);
-            this.txtFrameRate.TabIndex = 10;
-            this.txtFrameRate.Text = "30";
+            this.txtFramerate.Enabled = false;
+            this.txtFramerate.Location = new System.Drawing.Point(406, 82);
+            this.txtFramerate.Name = "txtFramerate";
+            this.txtFramerate.Size = new System.Drawing.Size(46, 26);
+            this.txtFramerate.TabIndex = 10;
+            this.txtFramerate.Text = "30";
             // 
             // chkResolution
             // 
@@ -290,6 +295,7 @@
             this.chkResolution.TabIndex = 11;
             this.chkResolution.Text = "Change Resolution (Unchecked = Same as source)";
             this.chkResolution.UseVisualStyleBackColor = true;
+            this.chkResolution.CheckedChanged += new System.EventHandler(this.chkResolution_CheckedChanged);
             // 
             // txtResolutionWidth
             // 
@@ -351,6 +357,7 @@
             this.MinimumSize = new System.Drawing.Size(714, 373);
             this.Name = "Griffrendor";
             this.Text = "Griffrendor";
+            this.Load += new System.EventHandler(this.Griffrendor_Load);
             this.grpOptionalSettings.ResumeLayout(false);
             this.grpOptionalSettings.PerformLayout();
             this.ResumeLayout(false);
@@ -381,8 +388,8 @@
         private System.Windows.Forms.Label lblCutStart;
         private System.Windows.Forms.CheckBox chkCutVideo;
         private System.Windows.Forms.CheckBox chkResolution;
-        private System.Windows.Forms.TextBox txtFrameRate;
-        private System.Windows.Forms.CheckBox chkFrameRate;
+        private System.Windows.Forms.TextBox txtFramerate;
+        private System.Windows.Forms.CheckBox chkFramerate;
         private System.Windows.Forms.CheckBox chkSlowEncode;
         private System.Windows.Forms.TextBox txtResolutionHeight;
         private System.Windows.Forms.TextBox txtResolutionWidth;
