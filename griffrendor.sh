@@ -1,2 +1,2 @@
 #!/bin/bash
-x-terminal-emulator -e mono griffrendor.exe
+x-terminal-emulator -e wine Griffrendor.exe
