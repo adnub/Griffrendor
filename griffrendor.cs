@@ -128,6 +128,7 @@ namespace Griffrendor
                 txtCutEndSeconds.Enabled = true;
                 txtCutEndmsec.Enabled = true;
                 lblTimeFormat.Enabled = true;
+                btnCutAssistant.Enabled = true;
             }
             else
             {
@@ -142,6 +143,7 @@ namespace Griffrendor
                 txtCutEndSeconds.Enabled = false;
                 txtCutEndmsec.Enabled = false ;
                 lblTimeFormat.Enabled = false;
+                btnCutAssistant.Enabled = false;
             }
         }
 
@@ -324,6 +326,13 @@ namespace Griffrendor
             MessageBox.Show("Done!");
             this.BringToFront();
             this.Activate();
+        }
+
+        private void btnCutAssistant_Click(object sender, EventArgs e)
+        {
+            //TODO: Add sanity check to see if video source field is filled in.
+            CutAssistant cutAssistant = new CutAssistant(txtInput.Text);
+            cutAssistant.Show();
         }
     }
 }

@@ -39,25 +39,26 @@
             this.chkAudio = new System.Windows.Forms.CheckBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.grpOptionalSettings = new System.Windows.Forms.GroupBox();
-            this.chkCutVideo = new System.Windows.Forms.CheckBox();
-            this.lblCutStart = new System.Windows.Forms.Label();
-            this.txtCutStartHours = new System.Windows.Forms.TextBox();
-            this.txtCutStartMinutes = new System.Windows.Forms.TextBox();
-            this.txtCutStartSeconds = new System.Windows.Forms.TextBox();
-            this.lblCutEnd = new System.Windows.Forms.Label();
+            this.lblTimeFormat = new System.Windows.Forms.Label();
+            this.txtCutEndmsec = new System.Windows.Forms.TextBox();
+            this.txtCutStartmsec = new System.Windows.Forms.TextBox();
+            this.chkUncapBitrate = new System.Windows.Forms.CheckBox();
+            this.chkSlowEncode = new System.Windows.Forms.CheckBox();
+            this.txtResolutionHeight = new System.Windows.Forms.TextBox();
+            this.txtResolutionWidth = new System.Windows.Forms.TextBox();
+            this.chkResolution = new System.Windows.Forms.CheckBox();
+            this.txtFramerate = new System.Windows.Forms.TextBox();
+            this.chkFramerate = new System.Windows.Forms.CheckBox();
             this.txtCutEndSeconds = new System.Windows.Forms.TextBox();
             this.txtCutEndMinutes = new System.Windows.Forms.TextBox();
             this.txtCutEndHours = new System.Windows.Forms.TextBox();
-            this.chkFramerate = new System.Windows.Forms.CheckBox();
-            this.txtFramerate = new System.Windows.Forms.TextBox();
-            this.chkResolution = new System.Windows.Forms.CheckBox();
-            this.txtResolutionWidth = new System.Windows.Forms.TextBox();
-            this.txtResolutionHeight = new System.Windows.Forms.TextBox();
-            this.chkSlowEncode = new System.Windows.Forms.CheckBox();
-            this.chkUncapBitrate = new System.Windows.Forms.CheckBox();
-            this.txtCutStartmsec = new System.Windows.Forms.TextBox();
-            this.txtCutEndmsec = new System.Windows.Forms.TextBox();
-            this.lblTimeFormat = new System.Windows.Forms.Label();
+            this.lblCutEnd = new System.Windows.Forms.Label();
+            this.txtCutStartSeconds = new System.Windows.Forms.TextBox();
+            this.txtCutStartMinutes = new System.Windows.Forms.TextBox();
+            this.txtCutStartHours = new System.Windows.Forms.TextBox();
+            this.lblCutStart = new System.Windows.Forms.Label();
+            this.chkCutVideo = new System.Windows.Forms.CheckBox();
+            this.btnCutAssistant = new System.Windows.Forms.Button();
             this.grpOptionalSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -161,6 +162,7 @@
             // 
             this.grpOptionalSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpOptionalSettings.Controls.Add(this.btnCutAssistant);
             this.grpOptionalSettings.Controls.Add(this.lblTimeFormat);
             this.grpOptionalSettings.Controls.Add(this.txtCutEndmsec);
             this.grpOptionalSettings.Controls.Add(this.txtCutStartmsec);
@@ -187,63 +189,103 @@
             this.grpOptionalSettings.TabStop = false;
             this.grpOptionalSettings.Text = "Optional Settings";
             // 
-            // chkCutVideo
+            // lblTimeFormat
             // 
-            this.chkCutVideo.AutoSize = true;
-            this.chkCutVideo.Location = new System.Drawing.Point(11, 25);
-            this.chkCutVideo.Name = "chkCutVideo";
-            this.chkCutVideo.Size = new System.Drawing.Size(98, 24);
-            this.chkCutVideo.TabIndex = 0;
-            this.chkCutVideo.Text = "Cut Video";
-            this.chkCutVideo.UseVisualStyleBackColor = true;
-            this.chkCutVideo.CheckedChanged += new System.EventHandler(this.chkCutVideo_CheckedChanged);
+            this.lblTimeFormat.AutoSize = true;
+            this.lblTimeFormat.Enabled = false;
+            this.lblTimeFormat.Location = new System.Drawing.Point(408, 52);
+            this.lblTimeFormat.Name = "lblTimeFormat";
+            this.lblTimeFormat.Size = new System.Drawing.Size(129, 20);
+            this.lblTimeFormat.TabIndex = 18;
+            this.lblTimeFormat.Text = "(hh mm ss msec)";
             // 
-            // lblCutStart
+            // txtCutEndmsec
             // 
-            this.lblCutStart.AutoSize = true;
-            this.lblCutStart.Enabled = false;
-            this.lblCutStart.Location = new System.Drawing.Point(7, 52);
-            this.lblCutStart.Name = "lblCutStart";
-            this.lblCutStart.Size = new System.Drawing.Size(44, 20);
-            this.lblCutStart.TabIndex = 1;
-            this.lblCutStart.Text = "Start";
+            this.txtCutEndmsec.Enabled = false;
+            this.txtCutEndmsec.Location = new System.Drawing.Point(364, 49);
+            this.txtCutEndmsec.Name = "txtCutEndmsec";
+            this.txtCutEndmsec.Size = new System.Drawing.Size(38, 26);
+            this.txtCutEndmsec.TabIndex = 17;
+            this.txtCutEndmsec.Text = "000";
             // 
-            // txtCutStartHours
+            // txtCutStartmsec
             // 
-            this.txtCutStartHours.Enabled = false;
-            this.txtCutStartHours.Location = new System.Drawing.Point(54, 49);
-            this.txtCutStartHours.Name = "txtCutStartHours";
-            this.txtCutStartHours.Size = new System.Drawing.Size(31, 26);
-            this.txtCutStartHours.TabIndex = 2;
-            this.txtCutStartHours.Text = "0";
+            this.txtCutStartmsec.Enabled = false;
+            this.txtCutStartmsec.Location = new System.Drawing.Point(165, 49);
+            this.txtCutStartmsec.Name = "txtCutStartmsec";
+            this.txtCutStartmsec.Size = new System.Drawing.Size(38, 26);
+            this.txtCutStartmsec.TabIndex = 16;
+            this.txtCutStartmsec.Text = "000";
             // 
-            // txtCutStartMinutes
+            // chkUncapBitrate
             // 
-            this.txtCutStartMinutes.Enabled = false;
-            this.txtCutStartMinutes.Location = new System.Drawing.Point(91, 49);
-            this.txtCutStartMinutes.Name = "txtCutStartMinutes";
-            this.txtCutStartMinutes.Size = new System.Drawing.Size(31, 26);
-            this.txtCutStartMinutes.TabIndex = 3;
-            this.txtCutStartMinutes.Text = "0";
+            this.chkUncapBitrate.AutoSize = true;
+            this.chkUncapBitrate.Location = new System.Drawing.Point(11, 174);
+            this.chkUncapBitrate.Name = "chkUncapBitrate";
+            this.chkUncapBitrate.Size = new System.Drawing.Size(663, 24);
+            this.chkUncapBitrate.TabIndex = 15;
+            this.chkUncapBitrate.Text = "Uncap Bitrate (Always generates maximum filesize video. Might break previews in D" +
+    "iscord.)";
+            this.chkUncapBitrate.UseVisualStyleBackColor = true;
             // 
-            // txtCutStartSeconds
+            // chkSlowEncode
             // 
-            this.txtCutStartSeconds.Enabled = false;
-            this.txtCutStartSeconds.Location = new System.Drawing.Point(128, 49);
-            this.txtCutStartSeconds.Name = "txtCutStartSeconds";
-            this.txtCutStartSeconds.Size = new System.Drawing.Size(31, 26);
-            this.txtCutStartSeconds.TabIndex = 4;
-            this.txtCutStartSeconds.Text = "0";
+            this.chkSlowEncode.AutoSize = true;
+            this.chkSlowEncode.Location = new System.Drawing.Point(11, 144);
+            this.chkSlowEncode.Name = "chkSlowEncode";
+            this.chkSlowEncode.Size = new System.Drawing.Size(385, 24);
+            this.chkSlowEncode.TabIndex = 14;
+            this.chkSlowEncode.Text = "Slow Encode (Improves quality, but is WAY slower)";
+            this.chkSlowEncode.UseVisualStyleBackColor = true;
             // 
-            // lblCutEnd
+            // txtResolutionHeight
             // 
-            this.lblCutEnd.AutoSize = true;
-            this.lblCutEnd.Enabled = false;
-            this.lblCutEnd.Location = new System.Drawing.Point(209, 52);
-            this.lblCutEnd.Name = "lblCutEnd";
-            this.lblCutEnd.Size = new System.Drawing.Size(38, 20);
-            this.lblCutEnd.TabIndex = 5;
-            this.lblCutEnd.Text = "End";
+            this.txtResolutionHeight.Enabled = false;
+            this.txtResolutionHeight.Location = new System.Drawing.Point(458, 114);
+            this.txtResolutionHeight.Name = "txtResolutionHeight";
+            this.txtResolutionHeight.Size = new System.Drawing.Size(46, 26);
+            this.txtResolutionHeight.TabIndex = 13;
+            this.txtResolutionHeight.Text = "720";
+            // 
+            // txtResolutionWidth
+            // 
+            this.txtResolutionWidth.Enabled = false;
+            this.txtResolutionWidth.Location = new System.Drawing.Point(406, 114);
+            this.txtResolutionWidth.Name = "txtResolutionWidth";
+            this.txtResolutionWidth.Size = new System.Drawing.Size(46, 26);
+            this.txtResolutionWidth.TabIndex = 12;
+            this.txtResolutionWidth.Text = "1280";
+            // 
+            // chkResolution
+            // 
+            this.chkResolution.AutoSize = true;
+            this.chkResolution.Location = new System.Drawing.Point(11, 114);
+            this.chkResolution.Name = "chkResolution";
+            this.chkResolution.Size = new System.Drawing.Size(391, 24);
+            this.chkResolution.TabIndex = 11;
+            this.chkResolution.Text = "Change Resolution (Unchecked = Same as source)";
+            this.chkResolution.UseVisualStyleBackColor = true;
+            this.chkResolution.CheckedChanged += new System.EventHandler(this.chkResolution_CheckedChanged);
+            // 
+            // txtFramerate
+            // 
+            this.txtFramerate.Enabled = false;
+            this.txtFramerate.Location = new System.Drawing.Point(406, 82);
+            this.txtFramerate.Name = "txtFramerate";
+            this.txtFramerate.Size = new System.Drawing.Size(46, 26);
+            this.txtFramerate.TabIndex = 10;
+            this.txtFramerate.Text = "30";
+            // 
+            // chkFramerate
+            // 
+            this.chkFramerate.AutoSize = true;
+            this.chkFramerate.Location = new System.Drawing.Point(11, 84);
+            this.chkFramerate.Name = "chkFramerate";
+            this.chkFramerate.Size = new System.Drawing.Size(389, 24);
+            this.chkFramerate.TabIndex = 9;
+            this.chkFramerate.Text = "Change Framerate (Unchecked = Same as source)";
+            this.chkFramerate.UseVisualStyleBackColor = true;
+            this.chkFramerate.CheckedChanged += new System.EventHandler(this.chkFrameRate_CheckedChanged);
             // 
             // txtCutEndSeconds
             // 
@@ -272,103 +314,74 @@
             this.txtCutEndHours.TabIndex = 6;
             this.txtCutEndHours.Text = "0";
             // 
-            // chkFramerate
+            // lblCutEnd
             // 
-            this.chkFramerate.AutoSize = true;
-            this.chkFramerate.Location = new System.Drawing.Point(11, 84);
-            this.chkFramerate.Name = "chkFramerate";
-            this.chkFramerate.Size = new System.Drawing.Size(389, 24);
-            this.chkFramerate.TabIndex = 9;
-            this.chkFramerate.Text = "Change Framerate (Unchecked = Same as source)";
-            this.chkFramerate.UseVisualStyleBackColor = true;
-            this.chkFramerate.CheckedChanged += new System.EventHandler(this.chkFrameRate_CheckedChanged);
+            this.lblCutEnd.AutoSize = true;
+            this.lblCutEnd.Enabled = false;
+            this.lblCutEnd.Location = new System.Drawing.Point(209, 52);
+            this.lblCutEnd.Name = "lblCutEnd";
+            this.lblCutEnd.Size = new System.Drawing.Size(38, 20);
+            this.lblCutEnd.TabIndex = 5;
+            this.lblCutEnd.Text = "End";
             // 
-            // txtFramerate
+            // txtCutStartSeconds
             // 
-            this.txtFramerate.Enabled = false;
-            this.txtFramerate.Location = new System.Drawing.Point(406, 82);
-            this.txtFramerate.Name = "txtFramerate";
-            this.txtFramerate.Size = new System.Drawing.Size(46, 26);
-            this.txtFramerate.TabIndex = 10;
-            this.txtFramerate.Text = "30";
+            this.txtCutStartSeconds.Enabled = false;
+            this.txtCutStartSeconds.Location = new System.Drawing.Point(128, 49);
+            this.txtCutStartSeconds.Name = "txtCutStartSeconds";
+            this.txtCutStartSeconds.Size = new System.Drawing.Size(31, 26);
+            this.txtCutStartSeconds.TabIndex = 4;
+            this.txtCutStartSeconds.Text = "0";
             // 
-            // chkResolution
+            // txtCutStartMinutes
             // 
-            this.chkResolution.AutoSize = true;
-            this.chkResolution.Location = new System.Drawing.Point(11, 114);
-            this.chkResolution.Name = "chkResolution";
-            this.chkResolution.Size = new System.Drawing.Size(391, 24);
-            this.chkResolution.TabIndex = 11;
-            this.chkResolution.Text = "Change Resolution (Unchecked = Same as source)";
-            this.chkResolution.UseVisualStyleBackColor = true;
-            this.chkResolution.CheckedChanged += new System.EventHandler(this.chkResolution_CheckedChanged);
+            this.txtCutStartMinutes.Enabled = false;
+            this.txtCutStartMinutes.Location = new System.Drawing.Point(91, 49);
+            this.txtCutStartMinutes.Name = "txtCutStartMinutes";
+            this.txtCutStartMinutes.Size = new System.Drawing.Size(31, 26);
+            this.txtCutStartMinutes.TabIndex = 3;
+            this.txtCutStartMinutes.Text = "0";
             // 
-            // txtResolutionWidth
+            // txtCutStartHours
             // 
-            this.txtResolutionWidth.Enabled = false;
-            this.txtResolutionWidth.Location = new System.Drawing.Point(406, 114);
-            this.txtResolutionWidth.Name = "txtResolutionWidth";
-            this.txtResolutionWidth.Size = new System.Drawing.Size(46, 26);
-            this.txtResolutionWidth.TabIndex = 12;
-            this.txtResolutionWidth.Text = "1280";
+            this.txtCutStartHours.Enabled = false;
+            this.txtCutStartHours.Location = new System.Drawing.Point(54, 49);
+            this.txtCutStartHours.Name = "txtCutStartHours";
+            this.txtCutStartHours.Size = new System.Drawing.Size(31, 26);
+            this.txtCutStartHours.TabIndex = 2;
+            this.txtCutStartHours.Text = "0";
             // 
-            // txtResolutionHeight
+            // lblCutStart
             // 
-            this.txtResolutionHeight.Enabled = false;
-            this.txtResolutionHeight.Location = new System.Drawing.Point(458, 114);
-            this.txtResolutionHeight.Name = "txtResolutionHeight";
-            this.txtResolutionHeight.Size = new System.Drawing.Size(46, 26);
-            this.txtResolutionHeight.TabIndex = 13;
-            this.txtResolutionHeight.Text = "720";
+            this.lblCutStart.AutoSize = true;
+            this.lblCutStart.Enabled = false;
+            this.lblCutStart.Location = new System.Drawing.Point(7, 52);
+            this.lblCutStart.Name = "lblCutStart";
+            this.lblCutStart.Size = new System.Drawing.Size(44, 20);
+            this.lblCutStart.TabIndex = 1;
+            this.lblCutStart.Text = "Start";
             // 
-            // chkSlowEncode
+            // chkCutVideo
             // 
-            this.chkSlowEncode.AutoSize = true;
-            this.chkSlowEncode.Location = new System.Drawing.Point(11, 144);
-            this.chkSlowEncode.Name = "chkSlowEncode";
-            this.chkSlowEncode.Size = new System.Drawing.Size(385, 24);
-            this.chkSlowEncode.TabIndex = 14;
-            this.chkSlowEncode.Text = "Slow Encode (Improves quality, but is WAY slower)";
-            this.chkSlowEncode.UseVisualStyleBackColor = true;
+            this.chkCutVideo.AutoSize = true;
+            this.chkCutVideo.Location = new System.Drawing.Point(11, 25);
+            this.chkCutVideo.Name = "chkCutVideo";
+            this.chkCutVideo.Size = new System.Drawing.Size(98, 24);
+            this.chkCutVideo.TabIndex = 0;
+            this.chkCutVideo.Text = "Cut Video";
+            this.chkCutVideo.UseVisualStyleBackColor = true;
+            this.chkCutVideo.CheckedChanged += new System.EventHandler(this.chkCutVideo_CheckedChanged);
             // 
-            // chkUncapBitrate
+            // btnCutAssistant
             // 
-            this.chkUncapBitrate.AutoSize = true;
-            this.chkUncapBitrate.Location = new System.Drawing.Point(11, 174);
-            this.chkUncapBitrate.Name = "chkUncapBitrate";
-            this.chkUncapBitrate.Size = new System.Drawing.Size(663, 24);
-            this.chkUncapBitrate.TabIndex = 15;
-            this.chkUncapBitrate.Text = "Uncap Bitrate (Always generates maximum filesize video. Might break previews in D" +
-    "iscord.)";
-            this.chkUncapBitrate.UseVisualStyleBackColor = true;
-            // 
-            // txtCutStartmsec
-            // 
-            this.txtCutStartmsec.Enabled = false;
-            this.txtCutStartmsec.Location = new System.Drawing.Point(165, 49);
-            this.txtCutStartmsec.Name = "txtCutStartmsec";
-            this.txtCutStartmsec.Size = new System.Drawing.Size(38, 26);
-            this.txtCutStartmsec.TabIndex = 16;
-            this.txtCutStartmsec.Text = "000";
-            // 
-            // txtCutEndmsec
-            // 
-            this.txtCutEndmsec.Enabled = false;
-            this.txtCutEndmsec.Location = new System.Drawing.Point(364, 49);
-            this.txtCutEndmsec.Name = "txtCutEndmsec";
-            this.txtCutEndmsec.Size = new System.Drawing.Size(38, 26);
-            this.txtCutEndmsec.TabIndex = 17;
-            this.txtCutEndmsec.Text = "000";
-            // 
-            // lblTimeFormat
-            // 
-            this.lblTimeFormat.AutoSize = true;
-            this.lblTimeFormat.Enabled = false;
-            this.lblTimeFormat.Location = new System.Drawing.Point(408, 52);
-            this.lblTimeFormat.Name = "lblTimeFormat";
-            this.lblTimeFormat.Size = new System.Drawing.Size(129, 20);
-            this.lblTimeFormat.TabIndex = 18;
-            this.lblTimeFormat.Text = "(hh mm ss msec)";
+            this.btnCutAssistant.Enabled = false;
+            this.btnCutAssistant.Location = new System.Drawing.Point(543, 49);
+            this.btnCutAssistant.Name = "btnCutAssistant";
+            this.btnCutAssistant.Size = new System.Drawing.Size(131, 26);
+            this.btnCutAssistant.TabIndex = 19;
+            this.btnCutAssistant.Text = "Cut Assistant ...";
+            this.btnCutAssistant.UseVisualStyleBackColor = true;
+            this.btnCutAssistant.Click += new System.EventHandler(this.btnCutAssistant_Click);
             // 
             // Griffrendor
             // 
@@ -431,6 +444,7 @@
         private System.Windows.Forms.TextBox txtCutStartmsec;
         private System.Windows.Forms.TextBox txtCutEndmsec;
         private System.Windows.Forms.Label lblTimeFormat;
+        private System.Windows.Forms.Button btnCutAssistant;
     }
 }
 
