@@ -50,7 +50,7 @@
             // 
             // btnPlayPause
             // 
-            this.btnPlayPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnPlayPause.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnPlayPause.Location = new System.Drawing.Point(365, 465);
             this.btnPlayPause.Name = "btnPlayPause";
             this.btnPlayPause.Size = new System.Drawing.Size(75, 23);
@@ -61,7 +61,7 @@
             // 
             // trckTimeLine
             // 
-            this.trckTimeLine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.trckTimeLine.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trckTimeLine.Location = new System.Drawing.Point(13, 419);
             this.trckTimeLine.Maximum = 10000;
