@@ -55,6 +55,9 @@
             this.txtResolutionHeight = new System.Windows.Forms.TextBox();
             this.chkSlowEncode = new System.Windows.Forms.CheckBox();
             this.chkUncapBitrate = new System.Windows.Forms.CheckBox();
+            this.txtCutStartmsec = new System.Windows.Forms.TextBox();
+            this.txtCutEndmsec = new System.Windows.Forms.TextBox();
+            this.lblTimeFormat = new System.Windows.Forms.Label();
             this.grpOptionalSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -158,6 +161,9 @@
             // 
             this.grpOptionalSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpOptionalSettings.Controls.Add(this.lblTimeFormat);
+            this.grpOptionalSettings.Controls.Add(this.txtCutEndmsec);
+            this.grpOptionalSettings.Controls.Add(this.txtCutStartmsec);
             this.grpOptionalSettings.Controls.Add(this.chkUncapBitrate);
             this.grpOptionalSettings.Controls.Add(this.chkSlowEncode);
             this.grpOptionalSettings.Controls.Add(this.txtResolutionHeight);
@@ -225,15 +231,15 @@
             this.txtCutStartSeconds.Enabled = false;
             this.txtCutStartSeconds.Location = new System.Drawing.Point(128, 49);
             this.txtCutStartSeconds.Name = "txtCutStartSeconds";
-            this.txtCutStartSeconds.Size = new System.Drawing.Size(68, 26);
+            this.txtCutStartSeconds.Size = new System.Drawing.Size(31, 26);
             this.txtCutStartSeconds.TabIndex = 4;
-            this.txtCutStartSeconds.Text = "0.0";
+            this.txtCutStartSeconds.Text = "0";
             // 
             // lblCutEnd
             // 
             this.lblCutEnd.AutoSize = true;
             this.lblCutEnd.Enabled = false;
-            this.lblCutEnd.Location = new System.Drawing.Point(202, 52);
+            this.lblCutEnd.Location = new System.Drawing.Point(209, 52);
             this.lblCutEnd.Name = "lblCutEnd";
             this.lblCutEnd.Size = new System.Drawing.Size(38, 20);
             this.lblCutEnd.TabIndex = 5;
@@ -242,16 +248,16 @@
             // txtCutEndSeconds
             // 
             this.txtCutEndSeconds.Enabled = false;
-            this.txtCutEndSeconds.Location = new System.Drawing.Point(320, 49);
+            this.txtCutEndSeconds.Location = new System.Drawing.Point(327, 49);
             this.txtCutEndSeconds.Name = "txtCutEndSeconds";
-            this.txtCutEndSeconds.Size = new System.Drawing.Size(68, 26);
+            this.txtCutEndSeconds.Size = new System.Drawing.Size(31, 26);
             this.txtCutEndSeconds.TabIndex = 8;
-            this.txtCutEndSeconds.Text = "0.0";
+            this.txtCutEndSeconds.Text = "0";
             // 
             // txtCutEndMinutes
             // 
             this.txtCutEndMinutes.Enabled = false;
-            this.txtCutEndMinutes.Location = new System.Drawing.Point(283, 49);
+            this.txtCutEndMinutes.Location = new System.Drawing.Point(290, 49);
             this.txtCutEndMinutes.Name = "txtCutEndMinutes";
             this.txtCutEndMinutes.Size = new System.Drawing.Size(31, 26);
             this.txtCutEndMinutes.TabIndex = 7;
@@ -260,7 +266,7 @@
             // txtCutEndHours
             // 
             this.txtCutEndHours.Enabled = false;
-            this.txtCutEndHours.Location = new System.Drawing.Point(246, 49);
+            this.txtCutEndHours.Location = new System.Drawing.Point(253, 49);
             this.txtCutEndHours.Name = "txtCutEndHours";
             this.txtCutEndHours.Size = new System.Drawing.Size(31, 26);
             this.txtCutEndHours.TabIndex = 6;
@@ -336,6 +342,34 @@
     "iscord.)";
             this.chkUncapBitrate.UseVisualStyleBackColor = true;
             // 
+            // txtCutStartmsec
+            // 
+            this.txtCutStartmsec.Enabled = false;
+            this.txtCutStartmsec.Location = new System.Drawing.Point(165, 49);
+            this.txtCutStartmsec.Name = "txtCutStartmsec";
+            this.txtCutStartmsec.Size = new System.Drawing.Size(38, 26);
+            this.txtCutStartmsec.TabIndex = 16;
+            this.txtCutStartmsec.Text = "000";
+            // 
+            // txtCutEndmsec
+            // 
+            this.txtCutEndmsec.Enabled = false;
+            this.txtCutEndmsec.Location = new System.Drawing.Point(364, 49);
+            this.txtCutEndmsec.Name = "txtCutEndmsec";
+            this.txtCutEndmsec.Size = new System.Drawing.Size(38, 26);
+            this.txtCutEndmsec.TabIndex = 17;
+            this.txtCutEndmsec.Text = "000";
+            // 
+            // lblTimeFormat
+            // 
+            this.lblTimeFormat.AutoSize = true;
+            this.lblTimeFormat.Enabled = false;
+            this.lblTimeFormat.Location = new System.Drawing.Point(408, 52);
+            this.lblTimeFormat.Name = "lblTimeFormat";
+            this.lblTimeFormat.Size = new System.Drawing.Size(129, 20);
+            this.lblTimeFormat.TabIndex = 18;
+            this.lblTimeFormat.Text = "(hh mm ss msec)";
+            // 
             // Griffrendor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -394,6 +428,9 @@
         private System.Windows.Forms.TextBox txtResolutionHeight;
         private System.Windows.Forms.TextBox txtResolutionWidth;
         private System.Windows.Forms.CheckBox chkUncapBitrate;
+        private System.Windows.Forms.TextBox txtCutStartmsec;
+        private System.Windows.Forms.TextBox txtCutEndmsec;
+        private System.Windows.Forms.Label lblTimeFormat;
     }
 }
 

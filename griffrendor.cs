@@ -34,8 +34,32 @@ namespace Griffrendor
                 suffix = "_" + (suffixNum++).ToString();
             } while (File.Exists(txtOutput.Text));
         }
+
+        private void TextBox_KeyPress_DigitsOnly(object sender, KeyPressEventArgs e)
+        {
+            // Only allow control characters (like backspace) and digits
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
         private void Griffrendor_Load(object sender, EventArgs e)
         {
+            //Configure textboxes which should only accept numbers
+            this.txtFileSize.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+            this.txtCutStartHours.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+            this.txtCutStartMinutes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+            this.txtCutStartSeconds.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+            this.txtCutStartmsec.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+            this.txtCutEndHours.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+            this.txtCutEndMinutes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+            this.txtCutEndSeconds.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+            this.txtCutEndmsec.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+            this.txtFramerate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+            this.txtResolutionHeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+            this.txtResolutionWidth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_DigitsOnly);
+
             Console.WriteLine("Griffrendor waiting for input.");
             args = Environment.GetCommandLineArgs();
             string fileName = null;
@@ -98,9 +122,12 @@ namespace Griffrendor
                 txtCutStartHours.Enabled = true;
                 txtCutStartMinutes.Enabled = true;
                 txtCutStartSeconds.Enabled = true;
+                txtCutStartmsec.Enabled = true;
                 txtCutEndHours.Enabled = true;
                 txtCutEndMinutes.Enabled = true;
                 txtCutEndSeconds.Enabled = true;
+                txtCutEndmsec.Enabled = true;
+                lblTimeFormat.Enabled = true;
             }
             else
             {
@@ -109,9 +136,12 @@ namespace Griffrendor
                 txtCutStartHours.Enabled = false;
                 txtCutStartMinutes.Enabled = false;
                 txtCutStartSeconds.Enabled = false;
+                txtCutStartmsec.Enabled = false;
                 txtCutEndHours.Enabled = false;
                 txtCutEndMinutes.Enabled = false;
                 txtCutEndSeconds.Enabled = false;
+                txtCutEndmsec.Enabled = false ;
+                lblTimeFormat.Enabled = false;
             }
         }
 
@@ -146,7 +176,9 @@ namespace Griffrendor
             string exeDir = Path.GetDirectoryName(Application.ExecutablePath);
             string ffmpeg_path = Path.Combine(exeDir, "ffmpeg\\ffmpeg.exe");
             string ffprobe_path = Path.Combine(exeDir, "ffmpeg\\ffprobe.exe");
-            int duration = 0;
+            int durationmsec = 0;
+            int durationSeconds = 0;
+            int durationRemainder = 0;
             int video_bitrate = 0;
             this.SendToBack();
 
@@ -207,11 +239,13 @@ namespace Griffrendor
 
             if (chkCutVideo.Checked)
             {
-                int startSeconds = int.Parse(txtCutStartHours.Text) * 3600 + int.Parse(txtCutStartMinutes.Text) * 60 + int.Parse(txtCutStartSeconds.Text);
-                int endSeconds = int.Parse(txtCutEndHours.Text) * 3600 + int.Parse(txtCutEndMinutes.Text) * 60 + int.Parse(txtCutEndSeconds.Text);
-                duration = endSeconds - startSeconds;
-                ffmpeg_starttime = "-ss " + txtCutStartHours.Text + ":" + txtCutStartMinutes.Text + ":" + txtCutStartSeconds.Text;
-                ffmpeg_duration = "-t " + duration;
+                int startMiliSeconds = ((int.Parse(txtCutStartHours.Text) * 3600 + int.Parse(txtCutStartMinutes.Text) * 60 + int.Parse(txtCutStartSeconds.Text)) * 1000) + int.Parse(txtCutStartmsec.Text);
+                int endMiliSeconds = ((int.Parse(txtCutEndHours.Text) * 3600 + int.Parse(txtCutEndMinutes.Text) * 60 + int.Parse(txtCutEndSeconds.Text)) * 1000) + int.Parse(txtCutEndmsec.Text);
+                durationmsec = endMiliSeconds - startMiliSeconds;
+                durationSeconds = durationmsec / 1000;
+                durationRemainder = durationmsec % 1000;
+                ffmpeg_starttime = "-ss " + txtCutStartHours.Text + ":" + txtCutStartMinutes.Text + ":" + txtCutStartSeconds.Text + "." + txtCutStartmsec.Text;
+                ffmpeg_duration = "-t " + durationSeconds + "." + durationRemainder;
             }
             else
             {
@@ -223,7 +257,9 @@ namespace Griffrendor
                     while (!proc_ffprobe.StandardOutput.EndOfStream)
                     {
                         string line = proc_ffprobe.StandardOutput.ReadLine();
-                        duration = (int)Math.Ceiling(double.Parse(line, new CultureInfo("en-US")));
+                        durationmsec = ((int)Math.Ceiling(double.Parse(line, new CultureInfo("en-US"))) * 1000);
+                        durationSeconds = durationmsec / 1000;
+                        durationRemainder = durationmsec % 1000;
                     }
                 }
                 catch (Exception)
@@ -233,15 +269,15 @@ namespace Griffrendor
                 }
             }
 
-            if (duration <= 0)
+            if (durationmsec <= 0)
             {
-                MessageBox.Show("Error: Video duration is " + duration.ToString() + " seconds. Video file may be incompatible or incorrect input in cut video fields.");
+                MessageBox.Show("Error: Video duration is " + durationmsec.ToString() + " miliseconds. Video file may be incompatible or incorrect input in cut video fields.");
                 return;
             }
 
             //Calculate bitrate in kbit/s
             int int_filesize = int.Parse(txtFileSize.Text);
-            video_bitrate = int_filesize * 8000 / duration;
+            video_bitrate = int_filesize * 8000000 / durationmsec;
 
             if (!chkUncapBitrate.Checked)
             {
@@ -263,7 +299,6 @@ namespace Griffrendor
             {
                 ffmpeg_resolution = "-vf scale=" + txtResolutionWidth.Text + ":" + txtResolutionHeight.Text;
             }
-
             try
             {
                 //Perform analysis pass using ffmpeg
