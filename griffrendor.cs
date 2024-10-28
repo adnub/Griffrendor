@@ -17,6 +17,7 @@ namespace Griffrendor
     public partial class Griffrendor : Form
     {
         private string[] args;
+        private int maxBitRate = 20000; //in kbit/sec
         private String ffmpeg_logfile = "ffmpeg2pass-0.log";
         private String ffmpeg_mbtreefile = "ffmpeg2pass-0.log.mbtree";
 
@@ -283,7 +284,7 @@ namespace Griffrendor
 
             if (!chkUncapBitrate.Checked)
             {
-                if (video_bitrate > 15000) video_bitrate = 15000;
+                if (video_bitrate > maxBitRate) video_bitrate = maxBitRate;
             }
 
             if (chkAudio.Checked)
@@ -331,8 +332,28 @@ namespace Griffrendor
         private void btnCutAssistant_Click(object sender, EventArgs e)
         {
             //TODO: Add sanity check to see if video source field is filled in.
-            CutAssistant cutAssistant = new CutAssistant(txtInput.Text);
+            CutAssistant cutAssistant = new CutAssistant(txtInput.Text, this);
             cutAssistant.Show();
+        }
+
+        public void setCutTimes(int starttime, int endtime)
+        {
+            int buffer;
+            txtCutStartmsec.Text = (starttime % 1000).ToString("000");
+            buffer = starttime / 1000;
+            txtCutStartSeconds.Text = (buffer % 60).ToString("00");
+            buffer = buffer / 60;
+            txtCutStartMinutes.Text = (buffer % 60).ToString("00");
+            buffer = buffer / 60;
+            txtCutStartHours.Text = buffer.ToString("00");
+
+            txtCutEndmsec.Text = (endtime % 1000).ToString("000");
+            buffer = endtime / 1000;
+            txtCutEndSeconds.Text = (buffer % 60).ToString("00");
+            buffer = buffer / 60;
+            txtCutEndMinutes.Text = (buffer % 60).ToString("00");
+            buffer = buffer / 60;
+            txtCutEndHours.Text = buffer.ToString("00");
         }
     }
 }

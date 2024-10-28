@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Griffrendor));
             this.lblInput = new System.Windows.Forms.Label();
             this.lblOutput = new System.Windows.Forms.Label();
             this.txtOutput = new System.Windows.Forms.TextBox();
@@ -39,6 +40,7 @@
             this.chkAudio = new System.Windows.Forms.CheckBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.grpOptionalSettings = new System.Windows.Forms.GroupBox();
+            this.btnCutAssistant = new System.Windows.Forms.Button();
             this.lblTimeFormat = new System.Windows.Forms.Label();
             this.txtCutEndmsec = new System.Windows.Forms.TextBox();
             this.txtCutStartmsec = new System.Windows.Forms.TextBox();
@@ -58,7 +60,6 @@
             this.txtCutStartHours = new System.Windows.Forms.TextBox();
             this.lblCutStart = new System.Windows.Forms.Label();
             this.chkCutVideo = new System.Windows.Forms.CheckBox();
-            this.btnCutAssistant = new System.Windows.Forms.Button();
             this.grpOptionalSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -188,6 +189,17 @@
             this.grpOptionalSettings.TabIndex = 10;
             this.grpOptionalSettings.TabStop = false;
             this.grpOptionalSettings.Text = "Optional Settings";
+            // 
+            // btnCutAssistant
+            // 
+            this.btnCutAssistant.Enabled = false;
+            this.btnCutAssistant.Location = new System.Drawing.Point(543, 49);
+            this.btnCutAssistant.Name = "btnCutAssistant";
+            this.btnCutAssistant.Size = new System.Drawing.Size(158, 26);
+            this.btnCutAssistant.TabIndex = 19;
+            this.btnCutAssistant.Text = "Cut Assistant ...";
+            this.btnCutAssistant.UseVisualStyleBackColor = true;
+            this.btnCutAssistant.Click += new System.EventHandler(this.btnCutAssistant_Click);
             // 
             // lblTimeFormat
             // 
@@ -372,17 +384,6 @@
             this.chkCutVideo.UseVisualStyleBackColor = true;
             this.chkCutVideo.CheckedChanged += new System.EventHandler(this.chkCutVideo_CheckedChanged);
             // 
-            // btnCutAssistant
-            // 
-            this.btnCutAssistant.Enabled = false;
-            this.btnCutAssistant.Location = new System.Drawing.Point(543, 49);
-            this.btnCutAssistant.Name = "btnCutAssistant";
-            this.btnCutAssistant.Size = new System.Drawing.Size(131, 26);
-            this.btnCutAssistant.TabIndex = 19;
-            this.btnCutAssistant.Text = "Cut Assistant ...";
-            this.btnCutAssistant.UseVisualStyleBackColor = true;
-            this.btnCutAssistant.Click += new System.EventHandler(this.btnCutAssistant_Click);
-            // 
             // Griffrendor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -400,9 +401,11 @@
             this.Controls.Add(this.lblOutput);
             this.Controls.Add(this.lblInput);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MinimumSize = new System.Drawing.Size(714, 373);
             this.Name = "Griffrendor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Griffrendor";
             this.Load += new System.EventHandler(this.Griffrendor_Load);
             this.grpOptionalSettings.ResumeLayout(false);
